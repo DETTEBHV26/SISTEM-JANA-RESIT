@@ -1,0 +1,5 @@
+{
+  "name": "Receipt Generator SK Inanam II",
+  "description": "A React application to generate payment receipts for the SK Inanam II Year 6 Appreciation Ceremony 2025. Users can select payment items, calculate the total, and generate a printable PDF receipt. The data is also submitted to a Google Sheet.",
+  "requestFramePermissions": []
+}

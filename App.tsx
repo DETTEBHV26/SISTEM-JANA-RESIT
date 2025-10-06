@@ -66,14 +66,29 @@ const App: React.FC = () => {
     }, []);
 
     const generateReceiptNumber = (): string => {
-        let receiptCounter = localStorage.getItem('receiptCounter');
+        const key = 'receiptCounter';
         let counter = 1;
-        // If a counter exists, increment it. Otherwise, start from 1.
-        if (receiptCounter) {
-            counter = parseInt(receiptCounter, 10) + 1;
+        try {
+            const storedCounter = localStorage.getItem(key);
+            if (storedCounter) {
+                const parsedCounter = parseInt(storedCounter, 10);
+                // Check if parsing was successful and it's a valid number
+                if (!isNaN(parsedCounter)) {
+                    counter = parsedCounter + 1;
+                }
+            }
+        } catch (error) {
+            console.error("Could not access localStorage for receipt counter:", error);
+            // Fallback or just continue with the default counter = 1
         }
-        localStorage.setItem('receiptCounter', counter.toString());
-        return `R${counter.toString().padStart(2, '0')}`;
+    
+        try {
+            localStorage.setItem(key, counter.toString());
+        } catch (error) {
+            console.error("Could not save receipt counter to localStorage:", error);
+        }
+        
+        return `r${counter.toString().padStart(2, '0')}`;
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
